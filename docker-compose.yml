@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Our Flask application
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"
+    networks:
+      - otel-network
+    depends_on:
+      - otel-collector
+
+  # OpenTelemetry Collector
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.90.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4327:4317"   # OTLP gRPC
+      - "4328:4318"   # OTLP HTTP
+    networks:
+      - otel-network
+    depends_on:
+      - jaeger
+
+  # Jaeger for distributed tracing visualization
+  jaeger:
+    image: jaegertracing/all-in-one:1.48.0
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16687:16686"  # Web UI
+      - "14251:14250"  # Model
+    networks:
+      - otel-network
+
+networks:
+  otel-network:
+    driver: bridge
