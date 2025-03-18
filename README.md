@@ -71,7 +71,7 @@ If you're running Docker Desktop on Windows, ensure your drive is properly share
 
 ## Detailed Documentation
 
-For a comprehensive guide on this setup, see [OpenTelemetry and Jaeger: Distributed Tracing for Beginners](opentelemetry-jaeger-guide.md).
+For a comprehensive guide on this setup, see <a href="https://alishaikh.me/understanding-opentelemetry-a-comprehensive-beginners-guide/" target="_blank" rel="noopener noreferrer">Understanding OpenTelemetry: A Comprehensive Beginner's Guide</a>.
 
 ## Licence
 
